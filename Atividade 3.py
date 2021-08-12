@@ -1,5 +1,6 @@
-def inicializaMatriz():
+# -*- coding: utf-8 -*-
 
+def inicializaMatriz():
     for i in range(vertices):
         newLine = []
 
@@ -8,24 +9,23 @@ def inicializaMatriz():
         grafo.append(newLine)
 
 def exibeMatriz():
-
     for i in range(vertices):
-
         for j in range(vertices):
-            print(grafo[i][j], end = " ")
-        print("")
+            print("\t\t", grafo[i][j], end = "\t")
+        print("\n\n")
 
 def addAresta(line, column):
 
     grafo[line- 1][column - 1] += 1
 
 
-def add():
-    resposta = 's'
-    while resposta == 's':
-
-        addLine = int(input("Digite a linha para adiconar aresta: "))
-        addColumn = int(input("Digite a coluna para adiconar aresta: "))
+def add(resp):
+    if(resp != 's'):
+        print("\nOk, parei de adicionar!\n\n")
+        return
+    elif((resp == 's') or (resp == 'S')):
+        addLine = int(input("Digite em qual linha queres adicionar aresta: "))
+        addColumn = int(input("Digite em qual coluna queres adicionar aresta: "))
 
         if(addLine and addColumn > vertices):
             print("Numero invalido")
@@ -33,60 +33,56 @@ def add():
             addAresta(addLine, addColumn)
             exibeMatriz()
 
-        resposta = input("Deseja adicionar mais vertices? [s/n] ")
-
-
+        resp = input("Deseja adicionar mais vertices? [s _] ")
+        print(resp)
+       
 def maiorGrauVertice():
-
+    maior = grafo[0][0]
     for i in range(vertices):
-
         for j in range(vertices):
-            if(grafo[i][j] >  grafo[i][j + 1]):
+            if(maior >  grafo[i][j]):
                 maior = grafo[i][j]
-            else:
-                maior = grafo[i][j + 1]
     return maior
 
-
 def menorGrauVertice():
-
+    menor = grafo[0][0]
     for i in range(vertices):
-
         for j in range(vertices):
-            if(grafo[i][j] <  grafo[i][j + 1]):
+            if(menor <  grafo[i][j]):
                 menor = grafo[i][j]
-            else:
-                menor = grafo[i][j + 1]
     return menor
 
 
 grafo = []
-vertices = int(input("Digite a quantidade de vertices desejada: "))
-print("Quantidade de vertices escolhida foi: ", vertices)
+vertices = int(input("Digite a quantidade de vertices: "))
+print("\nQuantidade de vertices: ", vertices)
 
-print("----Inicializando Matriz----")
+print("\t----------------------------Matriz Gerada:---------------------------\n")
 
 inicializaMatriz()
 exibeMatriz()
-print("----Matriz Inicializada----")
+
+print("\t----------------------------------------------------------------------")
 
 question = 's'
 while question == 's':
 
 
-    print("----Hora de adicionar os  vertices----")
-    add()
+    print("\n\n\t----Hora de adicionar os  vertices----\n")
+    add('s')
     question = input("Deseja continuar adicionando? [s/n] ")
-
+    if((question != 's') or (question != 'S') or (question != 'n') or (question != 'N')):
+       print("Opção Inválida!!!")
+    else:
+       add(question)
 
 print("----Exibindo Grafo----")
 exibeMatriz()
 
-print("----Maior Grau----")
+print("----Grau Máximo----")
 maiorVertice = maiorGrauVertice()
 print("Maior grau do Grafo: ", maiorVertice)
 
-
-print("----Menor Grau----")
+print("----Grau Mínimo----")
 menorVertice = menorGrauVertice()
 print("Menor grau do Grafo: ", menorVertice)
